@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// supabase - neondb - Utilizei o neondb
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Barbershop {
+  id          String              @id @default(uuid())
+  name        String
+  address     String
+  description String
+  imageUrl    String // Coloco a url da Imagem num S3 da vida
+  phones      String[]
+  services    BarbershopService[]
+}
+
+model BarbershopService {
+  id           String     @id @default(uuid())
+  name         String
+  description  String
+  imageUrl     String
+  barbershopId String
+  barbershop   Barbershop @relation(fields: [barbershopId], references: [id]) // Chave estrangeira para definir relação entre barbershopId com o Id da tabela Barbershop.
+  priceInCents Int // Não salvar em 'decimals' devido ao erro do node não calcular de forma precisa, a nao ser bitcoins, para fazer calculos de numeros inteiros tem que ser INT.
+}
+
+model Booking {
+  id           String    @id @default(uuid())
+  serviceId    String
+  barbershopId String
+  date         DateTime  @db.Timestamptz // UTC - Sem fuso horário - Melhor forma de salvar uma data no banco é sempre em UTC. - timestamptz salva em utc o horário no banco.
+  cancelled    Boolean?  @default(false)
+  cancelledAt  DateTime? @db.Timestamptz
+}
+
+/**
+ * Acabei de criar meu schema, agora vou fazer uma migration para o meu banco, vou pegar esse squema e aplicar no meu banco, com 'npx prisma format' e 'npx prisma generate',
+ * sempre que eu mudar o squema eu preciso rodar o 'npx prisma generate' após isso preciso usar o 'npx prisma db push' , ao fazer isso ele vai se conectar com o banco e vai criar essas tabelas no banco.
+ */

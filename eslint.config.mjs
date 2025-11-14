@@ -1,3 +1,5 @@
+// Ajuda a previnir bugs no código / manter certos padrões de configurações
+
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
