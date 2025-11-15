@@ -33,3 +33,7 @@ A Imagem do banner da página no topo deve ser a imagem da barbearia no banco de
 O botão de voltar no topo da página deve vpçtar a página inicial do projeto.
 
 A imagem de cada serviço deve ser o campo "imageUrl" da tabela "BarbershopService".
+
+Crie a página em @app\barbershops\[id]\page.tsx
+
+Crie um componente chamado "ServiceItem" que renderiza cada serviço, ele deve receber Service como prop. Use o componente @app_components\ui\separator.tsx como Divider.
