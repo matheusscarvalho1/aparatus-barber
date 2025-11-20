@@ -8,7 +8,7 @@ import { Avatar, AvatarImage } from "@/app/_components/ui/avatar";
 import { PageSectionTitle } from "@/app/_components/ui/page";
 import { Separator } from "@/app/_components/ui/separator";
 import { ServiceItem } from "@/app/_components/service-item";
-import { CopyPhoneButton } from "@/app/_components/copy-phone-button";
+import { PhoneItem } from "@/app/_components/copy-phone-button";
 import Footer from "@/app/_components/footer";
 
 interface PageProps {
@@ -23,7 +23,11 @@ const BarbershopPage = async ({ params }: PageProps) => {
       id: id,
     },
     include: {
-      services: true,
+      services: {
+        include: {
+          barbershop: true,
+        },
+      },
     },
   });
 
@@ -107,7 +111,7 @@ const BarbershopPage = async ({ params }: PageProps) => {
                       {phone}
                     </p>
                   </div>
-                  <CopyPhoneButton phone={phone} />
+                  <PhoneItem phone={phone} />
                 </div>
               ))}
             </div>

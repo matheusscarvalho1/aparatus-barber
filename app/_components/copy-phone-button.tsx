@@ -1,30 +1,33 @@
 "use client";
 
+import { Smartphone } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
 import { toast } from "sonner";
 
-interface CopyPhoneButtonProps {
+interface PhoneItemProps {
   phone: string;
 }
 
-export function CopyPhoneButton({ phone }: CopyPhoneButtonProps) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(phone);
-      setCopied(true);
-      toast.success("Copiado!");
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy phone number:", err);
-    }
+export function PhoneItem({ phone }: PhoneItemProps) {
+  const handleCopyPhone = () => {
+    navigator.clipboard.writeText(phone);
+    toast.success("Telefone copiado!");
   };
 
   return (
-    <Button variant="outline" onClick={handleCopy} className="rounded-full">
-      {copied ? "Copiado!" : "Copiar"}
-    </Button>
+    <div className="flex w-full items-center justify-between">
+      <div className="flex items-center gap-2.5">
+        <Smartphone className="size-6" />
+        <p className="text-foreground text-sm">{phone}</p>
+      </div>
+      <Button
+        variant="outline"
+        size="sm"
+        className="rounded-full"
+        onClick={handleCopyPhone}
+      >
+        Copiar
+      </Button>
+    </div>
   );
 }
