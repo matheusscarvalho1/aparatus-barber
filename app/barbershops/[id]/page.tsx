@@ -33,7 +33,6 @@ const BarbershopPage = async ({ params }: PageProps) => {
 
   return (
     <main>
-      {/* Header com Banner */}
       <div className="relative h-[297px] w-full">
         <Image
           src={barbershop.imageUrl}
@@ -53,11 +52,8 @@ const BarbershopPage = async ({ params }: PageProps) => {
           </Link>
         </div>
       </div>
-
-      {/* Container Principal */}
       <div className="bg-background relative z-20 -mt-6 rounded-t-[24px]">
         <div className="px-5">
-          {/* Informações da Barbearia */}
           <div className="flex items-start gap-[6px] pt-6">
             <Avatar className="size-[30px] rounded-full">
               <AvatarImage src={barbershop.imageUrl} alt={barbershop.name} />
@@ -77,20 +73,15 @@ const BarbershopPage = async ({ params }: PageProps) => {
           <div className="py-6">
             <Separator />
           </div>
-
-          {/* Seção Sobre Nós */}
           <div className="flex flex-col gap-3 py-0">
             <PageSectionTitle>Sobre Nós</PageSectionTitle>
             <p className="text-foreground text-sm leading-[1.4] whitespace-pre-wrap">
               {barbershop.description}
             </p>
           </div>
-
           <div className="py-6">
             <Separator />
           </div>
-
-          {/* Seção Serviços */}
           <div className="flex flex-col gap-3 py-0">
             <PageSectionTitle>Serviços</PageSectionTitle>
             <div className="flex flex-col gap-3">
@@ -99,12 +90,9 @@ const BarbershopPage = async ({ params }: PageProps) => {
               ))}
             </div>
           </div>
-
           <div className="py-6">
             <Separator />
           </div>
-
-          {/* Seção Contato */}
           <div className="flex flex-col gap-3 py-0">
             <PageSectionTitle>Contato</PageSectionTitle>
             <div className="flex flex-col gap-3">
