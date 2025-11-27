@@ -24,6 +24,7 @@ model Barbershop {
   imageUrl    String // Coloco a url da Imagem num S3 da vida
   phones      String[]
   services    BarbershopService[]
+  bookings    Booking[]
 }
 
 model BarbershopService {
@@ -34,17 +35,20 @@ model BarbershopService {
   barbershopId String
   barbershop   Barbershop @relation(fields: [barbershopId], references: [id]) // Chave estrangeira para definir relação entre barbershopId com o Id da tabela Barbershop.
   priceInCents Int // Não salvar em 'decimals' devido ao erro do node não calcular de forma precisa, a nao ser bitcoins, para fazer calculos de numeros inteiros tem que ser INT.
+  bookings     Booking[]
 }
 
 model Booking {
-  id           String    @id @default(uuid())
+  id           String            @id @default(uuid())
   serviceId    String
+  service      BarbershopService @relation(fields: [serviceId], references: [id])
   barbershopId String
+  barbershop   Barbershop        @relation(fields: [barbershopId], references: [id])
   userId       String
-  user User @relation(fields: [userId], references: [id])
-  date         DateTime  @db.Timestamptz // UTC - Sem fuso horário - Melhor forma de salvar uma data no banco é sempre em UTC. - timestamptz salva em utc o horário no banco.
-  cancelled    Boolean?  @default(false)
-  cancelledAt  DateTime? @db.Timestamptz
+  user         User              @relation(fields: [userId], references: [id])
+  date         DateTime          @db.Timestamptz // UTC - Sem fuso horário - Melhor forma de salvar uma data no banco é sempre em UTC. - timestamptz salva em utc o horário no banco.
+  cancelled    Boolean?          @default(false)
+  cancelledAt  DateTime?         @db.Timestamptz
 }
 
 model User {

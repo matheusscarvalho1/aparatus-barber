@@ -17,6 +17,8 @@ import { ptBR } from "date-fns/locale";
 import { useAction } from "next-safe-action/hooks";
 import { createBooking } from "../_actions/create-booking";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
+import { getDateAvailableTimeSlots } from "../_actions/get-date-available-time-slots";
 
 interface ServiceItemProps {
   service: BarbershopService & {
@@ -24,32 +26,26 @@ interface ServiceItemProps {
   };
 }
 
-const TIME_SLOTS = [
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "12:00",
-  "12:30",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:00",
-  "17:30",
-  "18:00",
-];
-
 export function ServiceItem({ service }: ServiceItemProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedTime, setSelectedTime] = useState<string | undefined>();
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
+  const { data: availableTimeSlots } = useQuery({
+    queryKey: ["date-available-time-slots", service.barbershopId, selectedDate],
+    queryFn: () =>
+      getDateAvailableTimeSlots({
+        barbershopId: service.barbershopId,
+        date: selectedDate!,
+      }),
+
+    // Se o selectedDate existir ele chama a função 'getDateAvailable...'
+    enabled: !!selectedDate,
+  });
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date);
+  };
+
   const { executeAsync, isPending } = useAction(createBooking);
 
   const priceInReais = (service.priceInCents / 100).toLocaleString("pt-BR", {
@@ -75,7 +71,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
     if (!selectedTime || !selectedDate) {
       return;
     }
-    const timeSplitted = selectedTime?.split(":")[0]; //10:00 -> [10, 00]
+    const timeSplitted = selectedTime?.split(":"); //10:00 -> [10, 00]
     const hours = timeSplitted[0];
     const minutes = timeSplitted[1];
     const date = new Date(selectedDate);
@@ -140,7 +136,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
             <Calendar
               mode="single"
               selected={selectedDate}
-              onSelect={setSelectedDate}
+              onSelect={handleDateSelect}
               disabled={{ before: today }}
               className="w-full p-0"
               locale={ptBR}
@@ -152,7 +148,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
               <Separator />
 
               <div className="flex gap-3 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
-                {TIME_SLOTS.map((time) => (
+                {availableTimeSlots?.data?.map((time) => (
                   <Button
                     key={time}
                     variant={selectedTime === time ? "default" : "outline"}
