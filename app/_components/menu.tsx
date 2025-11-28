@@ -35,8 +35,6 @@ const Menu = () => {
       </div>
 
       <Separator />
-
-      {/* Seção de Usuário */}
       {isLoggedIn ? (
         <div className="flex items-center gap-3 px-0">
           <Avatar className="size-12">
@@ -77,8 +75,6 @@ const Menu = () => {
       )}
 
       <Separator />
-
-      {/* Botões de Navegação */}
       <div className="flex flex-col gap-0">
         <Link href="/" className="w-full">
           <Button
@@ -101,8 +97,6 @@ const Menu = () => {
       </div>
 
       <Separator />
-
-      {/* Categorias */}
       <div className="flex flex-col gap-1">
         <Button
           variant="ghost"
@@ -143,8 +137,6 @@ const Menu = () => {
       </div>
 
       <Separator />
-
-      {/* Botão Sair */}
       {isLoggedIn && (
         <Button
           variant="ghost"
