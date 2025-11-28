@@ -15,7 +15,6 @@ import { Separator } from "./ui/separator";
 import { useState } from "react";
 import { ptBR } from "date-fns/locale";
 import { useAction } from "next-safe-action/hooks";
-import { createBooking } from "../_actions/create-booking";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { getDateAvailableTimeSlots } from "../_actions/get-date-available-time-slots";
@@ -32,8 +31,7 @@ interface ServiceItemProps {
 export function ServiceItem({ service }: ServiceItemProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedTime, setSelectedTime] = useState<string | undefined>();
-  const { executeAsync, isPending } = useAction(createBooking);
-  const  { executeAsync: executeCreateBookingCheckoutSession } = useAction(createBookingCheckoutSession)
+  const  { executeAsync: executeCreateBookingCheckoutSession, isPending } = useAction(createBookingCheckoutSession)
 
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const { data: availableTimeSlots } = useQuery({
@@ -43,8 +41,6 @@ export function ServiceItem({ service }: ServiceItemProps) {
         barbershopId: service.barbershopId,
         date: selectedDate!,
       }),
-
-    // Se o selectedDate existir ele chama a função 'getDateAvailable...'
     enabled: !!selectedDate,
   });
 
@@ -72,6 +68,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
     if (!selectedTime || !selectedDate) {
       return;
     }
+    
     const timeSplitted = selectedTime?.split(":"); //10:00 -> [10, 00]
     const hours = timeSplitted[0];
     const minutes = timeSplitted[1];
@@ -82,6 +79,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
       serviceId: service.id,
       date,
     })
+    
     if(checkoutSessionResult.serverError || checkoutSessionResult.validationErrors){
       toast.error(checkoutSessionResult.validationErrors?._errors?.[0]);
       return;
@@ -93,23 +91,11 @@ export function ServiceItem({ service }: ServiceItemProps) {
       toast.error("Erro ao carregar Stripe");
       return;
     }
+    
+    // O booking será criado automaticamente pelo webhook após o pagamento
     await stripe.redirectToCheckout({
       sessionId: checkoutSessionResult.data.id,
     })
- 
-
-    const result = await executeAsync({
-      serviceId: service.id,
-      date,
-    });
-    if (result.serverError || result.validationErrors) {
-      toast.error(result.validationErrors?._errors?.[0]);
-      return;
-    }
-    toast.success("Agendamento criado com sucesso.");
-    setSelectedDate(undefined);
-    setSelectedTime(undefined);
-    setSheetIsOpen(false);
   };
 
   return (

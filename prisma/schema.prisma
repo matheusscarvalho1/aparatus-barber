@@ -4,8 +4,6 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-// supabase - neondb - Utilizei o neondb
-
 generator client {
   provider = "prisma-client"
   output   = "../app/generated/prisma"
@@ -21,7 +19,7 @@ model Barbershop {
   name        String
   address     String
   description String
-  imageUrl    String // Coloco a url da Imagem num S3 da vida
+  imageUrl    String
   phones      String[]
   services    BarbershopService[]
   bookings    Booking[]
@@ -31,7 +29,7 @@ model BarbershopService {
   id           String     @id @default(uuid())
   name         String
   description  String
-  imageUrl     String
+  imageUrl     String // Coloco a url da Imagem num S3 da vida
   barbershopId String
   barbershop   Barbershop @relation(fields: [barbershopId], references: [id]) // Chave estrangeira para definir relação entre barbershopId com o Id da tabela Barbershop.
   priceInCents Int // Não salvar em 'decimals' devido ao erro do node não calcular de forma precisa, a nao ser bitcoins, para fazer calculos de numeros inteiros tem que ser INT.
@@ -39,16 +37,17 @@ model BarbershopService {
 }
 
 model Booking {
-  id           String            @id @default(uuid())
-  serviceId    String
-  service      BarbershopService @relation(fields: [serviceId], references: [id])
-  barbershopId String
-  barbershop   Barbershop        @relation(fields: [barbershopId], references: [id])
-  userId       String
-  user         User              @relation(fields: [userId], references: [id])
-  date         DateTime          @db.Timestamptz // UTC - Sem fuso horário - Melhor forma de salvar uma data no banco é sempre em UTC. - timestamptz salva em utc o horário no banco.
-  cancelled    Boolean?          @default(false)
-  cancelledAt  DateTime?         @db.Timestamptz
+  id             String            @id @default(uuid())
+  serviceId      String
+  service        BarbershopService @relation(fields: [serviceId], references: [id])
+  barbershopId   String
+  barbershop     Barbershop        @relation(fields: [barbershopId], references: [id])
+  userId         String
+  user           User              @relation(fields: [userId], references: [id])
+  date           DateTime          @db.Timestamptz // UTC - Sem fuso horário - Melhor forma de salvar uma data no banco é sempre em UTC. - timestamptz salva em utc o horário no banco.
+  cancelled      Boolean?          @default(false)
+  cancelledAt    DateTime?         @db.Timestamptz
+  stripeChargeId String?
 }
 
 model User {
