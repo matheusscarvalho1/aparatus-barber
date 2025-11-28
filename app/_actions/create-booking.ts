@@ -19,7 +19,7 @@ export const createBooking = actionClient
       headers: await headers(),
     });
     if (!session?.user) {
-      returnValidationErrors(inputSchema, {
+      return returnValidationErrors(inputSchema, {
         _errors: ["Unauthorized"],
       });
     }
@@ -29,7 +29,7 @@ export const createBooking = actionClient
       },
     });
     if (!service) {
-      returnValidationErrors(inputSchema, {
+      return returnValidationErrors(inputSchema, {
         _errors: ["Service not found"],
       });
     }
@@ -43,7 +43,7 @@ export const createBooking = actionClient
 
     if (existingBooking) {
       console.error("Já existe um agendamento para essa data");
-      returnValidationErrors(inputSchema, {
+      return returnValidationErrors(inputSchema, {
         _errors: ["Já existe um agendamento para essa data"],
       });
     }

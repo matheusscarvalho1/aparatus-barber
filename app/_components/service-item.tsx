@@ -19,6 +19,7 @@ import { createBooking } from "../_actions/create-booking";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { getDateAvailableTimeSlots } from "../_actions/get-date-available-time-slots";
+import { formatPrice } from "../helpers/format-price";
 
 interface ServiceItemProps {
   service: BarbershopService & {
@@ -47,13 +48,6 @@ export function ServiceItem({ service }: ServiceItemProps) {
   };
 
   const { executeAsync, isPending } = useAction(createBooking);
-
-  const priceInReais = (service.priceInCents / 100).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-
-  const priceInReaisInteger = Math.floor(service.priceInCents / 100);
 
   const formattedDate = selectedDate
     ? selectedDate.toLocaleDateString("pt-BR", {
@@ -116,7 +110,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
 
             <div className="flex w-full items-center justify-between">
               <p className="text-card-foreground text-sm leading-[1.4] font-bold whitespace-pre">
-                {priceInReais}
+                {formatPrice(service.priceInCents)}
               </p>
               <SheetTrigger asChild>
                 <Button className="rounded-full px-4 py-2">Reservar</Button>
@@ -169,7 +163,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
                       {service.name}
                     </p>
                     <p className="text-card-foreground text-sm font-bold">
-                      R${priceInReaisInteger},00
+                      {formatPrice(service.priceInCents)}
                     </p>
                   </div>
 

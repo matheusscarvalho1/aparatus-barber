@@ -42,7 +42,7 @@ export const getDateAvailableTimeSlots = actionClient
       headers: await headers(),
     });
     if (!session?.user) {
-      returnValidationErrors(inputSchema, {
+      return returnValidationErrors(inputSchema, {
         _errors: ["Unauthorized"],
       });
     }
