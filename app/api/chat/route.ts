@@ -3,6 +3,7 @@ import { google } from '@ai-sdk/google'
 import z from "zod";
 import { prisma } from "@/lib/prisma";
 import { getDateAvailableTimeSlots } from "@/app/_actions/get-date-available-time-slots";
+import { createBooking } from "@/app/_actions/create-booking";
 
 export const POST = async (request: Request) => {
   const { messages } = await request.json();
@@ -76,9 +77,21 @@ export const POST = async (request: Request) => {
         }),
         execute: async ({ name }) => {
           if (!name?.trim()) {
-            const barbershops = await prisma.barbershop.findMany();
-            return barbershops;
-
+            const barbershops = await prisma.barbershop.findMany({
+              include: {
+                services: true,
+              },
+            });
+            return barbershops.map((barbershop) => ({
+              barbershopId: barbershop.id,
+              name: barbershop.name,
+              addcress: barbershop.address,
+              services: barbershop.services.map((service) => ({
+                id: service.id,
+                name: service.name,
+                price: service.priceInCents / 100,
+              })),
+            }));
           }
 
           const barbershops = await prisma.barbershop.findMany({
@@ -104,7 +117,7 @@ export const POST = async (request: Request) => {
               barbershopId,
               date: parsedDate,
             });
-            if(result.serverError  || result.validationErrors){
+            if(result.serverError || result.validationErrors){
               return {
                 error: result.validationErrors?._errors?.[0],
               }
@@ -114,6 +127,29 @@ export const POST = async (request: Request) => {
               date,
               availableTimeSlots: result.data,
             }
+        }
+      }),
+      creatingBooking: tool({
+        description: "Criar um agendamento para um serviço em uma data específica.",
+        inputSchema: z.object({
+          serviceId: z.string().describe("ID do serviço"),
+          date: z.string().describe("Data em ISO String para a qual deseja agendar"),
+        }),
+        execute: async ({ serviceId, date}) => {
+          const parsedDate = new Date(date);
+          const result = await createBooking({
+            serviceId,
+            date: parsedDate,
+          })
+          if(result.validationErrors?._errors?.[0] || result.validationErrors) {
+            return {
+              error: result.validationErrors?._errors?.[0] || "Erro ao criar Agendamento",
+            }
+          }
+          return {
+            success: true,
+            message: "Agendamento criado com sucesso.",
+          }
         }
       })
     }
