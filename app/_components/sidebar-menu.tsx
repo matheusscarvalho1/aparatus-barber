@@ -72,10 +72,11 @@ const SidebarMenu = () => {
           </Link>
         </SheetClose>
         <SheetClose asChild>
-          <Link href="/bookings">
+          <Link href={session ? "/bookings" : "#"}>
             <Button
               variant="ghost"
               className="h-auto w-full justify-start gap-3 rounded-full px-5 py-3"
+              disabled={!session}
             >
               <CalendarDaysIcon className="size-4" />
               <span className="text-sm font-medium">Agendamentos</span>
@@ -89,37 +90,37 @@ const SidebarMenu = () => {
       <div className="flex flex-col gap-1">
         <Link
           href="/barbershops?search=barba"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className={!session ? "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 pointer-events-none opacity-50" : "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"}
         >
           <span className="text-sm font-medium">Barba</span>
         </Link>
         <Link
           href="/barbershops?search=cabelo"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className={!session ? "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 pointer-events-none opacity-50" : "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"}
         >
           <span className="text-sm font-medium">Cabelo</span>
         </Link>
         <Link
           href="/barbershops?search=acabamento"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className={!session ? "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 pointer-events-none opacity-50" : "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"}
         >
           <span className="text-sm font-medium">Acabamento</span>
         </Link>
         <Link
           href="/barbershops?search=sobrancelha"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className={!session ? "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 pointer-events-none opacity-50" : "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"}
         >
           <span className="text-sm font-medium">Sobrancelha</span>
         </Link>
         <Link
           href="/barbershops?search=pézinho"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className={!session ? "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 pointer-events-none opacity-50" : "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"}
         >
           <span className="text-sm font-medium">Pézinho</span>
         </Link>
         <Link
           href="/barbershops?search=progressiva"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className={!session ? "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 pointer-events-none opacity-50" : "h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"}
         >
           <span className="text-sm font-medium">Progressiva</span>
         </Link>
@@ -132,6 +133,7 @@ const SidebarMenu = () => {
           onClick={handleLogout}
           variant="ghost"
           className="w-full justify-start gap-3 rounded-full px-5 py-3"
+          disabled={!session}
         >
           <LogOutIcon className="size-4" />
           <span className="text-muted-foreground text-sm font-medium">
