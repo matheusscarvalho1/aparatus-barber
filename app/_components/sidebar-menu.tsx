@@ -28,7 +28,6 @@ const SidebarMenu = () => {
 
   return (
     <div className="flex h-full flex-col gap-6 py-6">
-      {/* User Section */}
       <div className="px-5">
         {session?.user ? (
           <div className="flex items-center gap-3">
@@ -46,9 +45,9 @@ const SidebarMenu = () => {
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-3">
             <div className="flex h-12 items-center">
-              <p className="text-base font-semibold">Olá. Faça seu login!</p>
+              <p className="text-base font-semibold">Olá, Faça seu login!</p>
             </div>
             <Button
               onClick={handleLogin}
@@ -60,8 +59,6 @@ const SidebarMenu = () => {
           </div>
         )}
       </div>
-
-      {/* Navigation Buttons */}
       <div className="flex flex-col">
         <SheetClose asChild>
           <Link href="/">
@@ -89,7 +86,6 @@ const SidebarMenu = () => {
 
       <Separator />
 
-      {/* Category Buttons */}
       <div className="flex flex-col gap-1">
         <Link
           href="/barbershops?search=barba"
@@ -131,7 +127,6 @@ const SidebarMenu = () => {
 
       <Separator />
 
-      {/* Logout Button */}
       <SheetClose asChild>
         <Button
           onClick={handleLogout}
