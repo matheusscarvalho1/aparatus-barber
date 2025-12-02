@@ -9,7 +9,6 @@ interface ChatMessageProps {
 
 export const ChatMessage = ({
   message,
-  isStreaming = false,
 }: ChatMessageProps) => {
   const isUser = message.role === "user";
   const isSystem = message.role === "system";
