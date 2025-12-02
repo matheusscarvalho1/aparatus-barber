@@ -21,12 +21,15 @@ import { getDateAvailableTimeSlots } from "../_actions/get-date-available-time-s
 import { formatPrice } from "../helpers/format-price";
 import { createBookingCheckoutSession } from "../_actions/create-booking-checkout-session";
 import { loadStripe } from "@stripe/stripe-js"
+import { getSessionAction } from "../_actions/get-session";
+import { authClient } from "@/lib/auth-client";
 
 interface ServiceItemProps {
   service: BarbershopService & {
     barbershop: Barbershop;
   };
 }
+
 
 export function ServiceItem({ service }: ServiceItemProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
@@ -43,10 +46,21 @@ export function ServiceItem({ service }: ServiceItemProps) {
       }),
     enabled: !!selectedDate,
   });
+  const { data: isLogged } = useQuery({
+    queryKey: ["session"],
+    queryFn: () => getSessionAction(),
+  });
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
   };
+
+  const handleLogin = async () => {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: `/barbershops/${service.barbershopId}`
+      });
+    };
 
   const formattedDate = selectedDate
     ? selectedDate.toLocaleDateString("pt-BR", {
@@ -133,27 +147,36 @@ export function ServiceItem({ service }: ServiceItemProps) {
         </div>
       </div>
 
+      
       <SheetContent className="w-[370px] overflow-y-auto p-0">
         <div className="flex h-full flex-col gap-6">
           <SheetHeader className="px-5 pt-6">
             <SheetTitle className="text-lg font-bold">Fazer Reserva</SheetTitle>
           </SheetHeader>
-
-          <div className="flex flex-col gap-4 px-5">
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={handleDateSelect}
-              disabled={{ before: today }}
-              className="w-full p-0"
-              locale={ptBR}
-            />
+        {!isLogged && (
+          <div className="flex flex-col gap-6 p-3">
+            <p className="text-muted-foreground ">Por gentileza, para agendar um horário com as nossas barbearias parceiras, faça autenticação na aplicação.</p>
+            <Button onClick={handleLogin}>
+              Faça Login
+            </Button>
           </div>
-
-          {selectedDate && (
+        )}  
+         {isLogged && (
+            <div className="flex flex-col gap-4 px-5">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={handleDateSelect}
+                disabled={{ before: today }}
+                className="w-full p-0"
+                locale={ptBR}
+              />
+            </div>
+          )}
+          {selectedDate &&(
             <>
               <Separator />
-
+            
               <div className="flex gap-3 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
                 {availableTimeSlots?.data?.map((time) => (
                   <Button
