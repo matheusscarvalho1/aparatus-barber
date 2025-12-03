@@ -10,7 +10,7 @@ import Link from "next/link";
 const Header = () => {
   return (
     <header className="flex items-center justify-between px-5 py-6">
-      <Link href="/">
+      <Link href="/" className="cursor-pointer">
         <Image
           // Cumulative Layout Shifting - Reserva o tamanho da imagem para mim,
           // Recebe tamanho de imagens otimizados para os tamanhos diferentes de tela

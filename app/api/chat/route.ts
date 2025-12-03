@@ -4,6 +4,8 @@ import z from "zod";
 import { prisma } from "@/lib/prisma";
 import { getDateAvailableTimeSlots } from "@/app/_actions/get-date-available-time-slots";
 import { createBooking } from "@/app/_actions/create-booking";
+import { getSessionAction } from "@/app/_actions/get-session";
+import { getDateTimeZone } from "@/app/_actions/get-date-time-zone";
 
 export const POST = async (request: Request) => {
   const { messages } = await request.json();
@@ -55,13 +57,32 @@ export const POST = async (request: Request) => {
     - Preço
 
     Importante:
+    - Quando o usuário começar a conversa, **SEMPRE** verifique você mesmo se ele esta autenticado na plataforma utilizando a tool 'getSession', caso ele não esteja autenticado, indique para ele o menu hamburguer em cima para autenticar ao lado do icone do chat (o último botão a direita, lá é possivel fazer autenticação), se ele já estiver logado, comprimente ele e deseje bom dia, boa tarde, boa noite, conforme o horário em que ele iniciou o chat.
+      - Se não estiver autenticado, informe que ele precisa acessar o menu hambúrguer no canto superior direito, ao lado do ícone do chat, para fazer login.
+      - Não prossiga até existir uma sessão válida.
+      - Se estiver autenticado, cumprimente o usuário com bom dia, boa tarde ou boa noite, conforme o horário atual.
+      - Sempre que o usuário iniciar a conversa ou enviar uma saudação e falar o nome dele (Ex: Boa noite Matheus), chame a ferramenta 'getDateTimeZone' para identificar o horário atual e a ferramenta 'getSession' para saber o nome da pessoa. Use essa informação para responder com bom dia / boa tarde / boa noite.
+    - Se o usuário insistir dizendo que está autenticado, execute getSession novamente.
+      - Se ainda não houver sessão válida, diga que não é possível continuar, pois a plataforma só pode registrar agendamentos com autenticação ativa.
     - NUNCA mostre informações técnicas ao usuário (barbershopId, serviceId, formatos ISO de data, etc.)
     - SEMPRE retorne texto para o usuário, NUNCA JSON.
     - Seja sempre educado, prestativo e use uma linguagem informal e amigável
     - Não liste TODOS os horários disponíveis, sugira apenas 4-5 opções espaçadas ao longo do dia
     - Se não houver horários disponíveis, sugira uma data alternativa
-    - Quando o usuário mencionar "hoje", "amanhã", "depois de amanhã" ou dias da semana, calcule a data correta automaticamente`,
-
+    - Quando o usuário mencionar "hoje", "amanhã", "depois de amanhã" ou dias da semana, calcule a data correta automaticamente.
+    - NUNCA inicie pagamentos com Stripe. 
+    - O chat só pode criar agendamentos simples e SEM pagamento antecipado. 
+    - Todo agendamento criado via chat deve ser pago exclusivamente no local. 
+    - Somente a interface principal do sistema pode iniciar pagamentos pelo Stripe — o chat está proibido de realizar qualquer cobrança.
+    
+  IMPORTANTE - SOBRE HORÁRIO:
+  - O usuário sempre fala horários no fuso da barbearia (America/Cuiabá ou UTC-3).
+  - NUNCA converta horários para UTC.
+  - Envie para a ferramenta creatingBooking o mesmo horário que o usuário pediu.
+  - Toda conversão de fuso é feita automaticamente no backend.
+  - Nunca some ou subtraia horas manualmente.
+    `,
+    
     messages: convertToModelMessages(messages),
     tools: {
       searchBarbershops: tool({
@@ -151,7 +172,35 @@ export const POST = async (request: Request) => {
             message: "Agendamento criado com sucesso.",
           }
         }
-      })
+      }),
+      getSession: tool({
+  description: "Verifica se o usuário está autenticado na aplicação.",
+  inputSchema: z.object({
+    sessionId: z.string().optional().describe("ID da sessão, se existir"),
+  }),
+  execute: async () => {
+    const session = await getSessionAction();
+
+    if (!session) {
+      return {
+        isAuthenticated: false,
+      };
+    }
+
+    return {
+      isAuthenticated: true,
+      userId: session.user.id,
+      email: session.user.email,
+    };
+  },
+      }),
+      getDateTimeZone: tool({
+  description: "Retorna o horário local do usuário para personalizar respostas.",
+  inputSchema: z.object({}),
+  execute: async () => {
+    return await getDateTimeZone();
+  },
+}),
     }
   });
   return result.toUIMessageStreamResponse();

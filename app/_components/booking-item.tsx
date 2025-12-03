@@ -201,8 +201,8 @@ const BookingItem = ({ booking }: BookingItemProps) => {
           </div>
           {booking.barbershop.phones.length > 0 && (
             <div className="space-y-3">
-              {booking.barbershop.phones.map((phone) => (
-                <PhoneItem key={phone.length + 1} phone={phone} />
+              {booking.barbershop.phones.map((phone, index) => (
+                <PhoneItem key={index} phone={phone} />
               ))}
             </div>
           )}

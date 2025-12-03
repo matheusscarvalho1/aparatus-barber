@@ -20,6 +20,7 @@ export const ChatMessage = ({
 
   if (isSystem) {
     return (
+      <>
       <div className="flex w-full flex-col gap-3 px-5 pt-6 pb-0">
         <div className="border-border flex w-full flex-col gap-2.5 rounded-xl border p-3">
           <div className="flex w-full items-center justify-center gap-2.5">
@@ -29,6 +30,7 @@ export const ChatMessage = ({
           </div>
         </div>
       </div>
+      </>
     );
   }
 
