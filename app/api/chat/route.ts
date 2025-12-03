@@ -21,7 +21,7 @@ export const POST = async (request: Request) => {
     month: "long",
     day: "numeric",
     timeZone: "America/Sao_Paulo",
-  })} (${new Date().toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" })})
+  })}
 
 
     Seu objetivo é ajudar os usuários a:
