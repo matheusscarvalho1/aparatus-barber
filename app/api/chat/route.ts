@@ -16,11 +16,13 @@ export const POST = async (request: Request) => {
     system: `Você é o Aparatus, um assistente virtual de agendamento de barbearias.
 
     DATA ATUAL: Hoje é ${new Date().toLocaleDateString("pt-BR", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })} (${new Date().toISOString().split("T")[0]})
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "America/Sao_Paulo",
+  })} (${new Date().toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" })})
+
 
     Seu objetivo é ajudar os usuários a:
     - Encontrar barbearias (por nome ou todas disponíveis)
@@ -61,7 +63,7 @@ export const POST = async (request: Request) => {
       - Se não estiver autenticado, informe que ele precisa acessar o menu hambúrguer no canto superior direito, ao lado do ícone do chat, para fazer login.
       - Não prossiga até existir uma sessão válida.
       - Se estiver autenticado, cumprimente o usuário com bom dia, boa tarde ou boa noite, conforme o horário atual.
-      - Sempre que o usuário iniciar a conversa ou enviar uma saudação e falar o nome dele (Ex: Boa noite Matheus), chame a ferramenta 'getDateTimeZone' para identificar o horário atual e a ferramenta 'getSession' para saber o nome da pessoa. Use essa informação para responder com bom dia / boa tarde / boa noite.
+      - **SEMPRE** que o usuário iniciar a conversa ou enviar uma saudação e falar o nome dele (Ex: Boa noite Fulano) através do retorno da ferramenta 'getSession' pois nele é retornado o userName do usuário, chame a ferramenta 'getDateTimeZone' para identificar o horário atual e a ferramenta 'getSession' para saber o nome da pessoa. Use essa informação para responder com bom dia / boa tarde / boa noite.
     - Se o usuário insistir dizendo que está autenticado, execute getSession novamente.
       - Se ainda não houver sessão válida, diga que não é possível continuar, pois a plataforma só pode registrar agendamentos com autenticação ativa.
     - NUNCA mostre informações técnicas ao usuário (barbershopId, serviceId, formatos ISO de data, etc.)
@@ -157,11 +159,16 @@ export const POST = async (request: Request) => {
           date: z.string().describe("Data em ISO String para a qual deseja agendar"),
         }),
         execute: async ({ serviceId, date}) => {
+          console.log("Recebi do frontend:", { serviceId, date });
           const parsedDate = new Date(date);
+            console.log("Data convertida para local:", parsedDate);
           const result = await createBooking({
             serviceId,
             date: parsedDate,
           })
+
+          console.log("Resultado do createBooking:", result);
+
           if(result.validationErrors?._errors?.[0] || result.validationErrors) {
             return {
               error: result.validationErrors?._errors?.[0] || "Erro ao criar Agendamento",
@@ -179,9 +186,9 @@ export const POST = async (request: Request) => {
     sessionId: z.string().optional().describe("ID da sessão, se existir"),
   }),
   execute: async () => {
-    const session = await getSessionAction();
+    const result = await getSessionAction();
 
-    if (!session) {
+    if (!result) {
       return {
         isAuthenticated: false,
       };
@@ -189,8 +196,9 @@ export const POST = async (request: Request) => {
 
     return {
       isAuthenticated: true,
-      userId: session.user.id,
-      email: session.user.email,
+      userId: result?.session?.user.id,
+      email: result?.session?.user.email,
+      name: result.userName
     };
   },
       }),

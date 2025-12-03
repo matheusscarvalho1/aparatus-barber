@@ -8,5 +8,8 @@ export async function getSessionAction() {
     headers: await headers(),
   });
 
-  return session;
+  return {
+    session,
+    userName: session?.user?.name,
+  };
 }
