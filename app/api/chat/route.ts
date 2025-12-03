@@ -159,15 +159,11 @@ export const POST = async (request: Request) => {
           date: z.string().describe("Data em ISO String para a qual deseja agendar"),
         }),
         execute: async ({ serviceId, date}) => {
-          console.log("Recebi do frontend:", { serviceId, date });
           const parsedDate = new Date(date);
-            console.log("Data convertida para local:", parsedDate);
           const result = await createBooking({
             serviceId,
             date: parsedDate,
           })
-
-          console.log("Resultado do createBooking:", result);
 
           if(result.validationErrors?._errors?.[0] || result.validationErrors) {
             return {
