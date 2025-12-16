@@ -104,10 +104,9 @@ src/
 
 ### Better Auth
 
-- Login com email e senha
 - OAuth com Google
 - Sessões seguras via cookies HTTP-only
-- Middleware de autorização em rotas server
+- Middleware de autorização em rotas server com as server actions e next-safe-action
 
 ### Segurança
 
@@ -141,7 +140,8 @@ src/
 2. Servidor cria a sessão no Stripe
 3. Stripe processa o pagamento
 4. Webhook confirma a transação
-5. Booking é marcado como **paid**
+5. Booking é marcado como **confirmado** ou **cancelado**
+6. Reembolso do pagamento com do Stripe com o Cliente caso ele cancele o Agendamento.
 
 ### Segurança
 
