@@ -10,7 +10,7 @@ O sistema permite o agendamento de serviços via calendário tradicional ou por 
 
 O projeto foi pensado como um estudo prático das principais tecnologias modernas do ecossistema **JavaScript / TypeScript**, aplicando boas práticas de arquitetura, UI/UX e integração com serviços externos.
 
-O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizando IA de forma estratégica, através de prompts otimizados que definem persona, tarefas, objetivos e contexto do projeto (MCP, regras globais, etc.) nos agentes de IA como GitHub Copilot, Cursor ou Claude Code, sempre como ferramenta de aceleração, e não como substituição do processo de desenvolvimento, mantendo total controle sobre o código e avaliando cada decisão gerada.
+O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizando IA generativa aplicada ao desenvolvimento de software, através de prompts otimizados que definem persona, tarefas, objetivos e contexto do projeto (MCP, regras globais, etc.) nos agentes de IA como GitHub Copilot, Cursor ou Claude Code, sempre como ferramenta de aceleração, e não como substituição do processo de desenvolvimento, mantendo total controle sobre o código e avaliando cada decisão gerada.
 
 ### Avisos / Limitações
 
