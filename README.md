@@ -6,6 +6,7 @@
 ## 📋 Descrição
 
 **Aparatus** é uma plataforma full-stack para gerenciamento de barbearias, desenvolvida com **Next.js 15** e focada em performance, acessibilidade e experiência **mobile-first**.  
+
 O sistema permite o agendamento de serviços via calendário tradicional ou por meio de um **assistente de IA**, além de oferecer catálogo de serviços, pagamentos online com **Stripe** e um painel administrativo completo.
 
 O projeto foi pensado como um estudo prático das principais tecnologias modernas do ecossistema **JavaScript / TypeScript**, aplicando boas práticas de arquitetura, UI/UX e integração com serviços externos.
