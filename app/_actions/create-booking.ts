@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { fromZonedTime } from "date-fns-tz";
 
 const inputSchema = z.object({
   serviceId: z.uuid(),
@@ -33,11 +34,13 @@ export const createBooking = actionClient
         _errors: ["Service not found"],
       });
     }
+    
+    const utcDate = fromZonedTime(date, "America/Sao_Paulo");
 
     const existingBooking = await prisma.booking.findFirst({
       where: {
         barbershopId: service.barbershopId,
-        date,
+        date: utcDate,
       },
     });
 

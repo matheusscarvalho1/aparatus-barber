@@ -77,12 +77,13 @@ export const POST = async (request: Request) => {
     - Todo agendamento criado via chat deve ser pago exclusivamente no local. 
     - Somente a interface principal do sistema pode iniciar pagamentos pelo Stripe — o chat está proibido de realizar qualquer cobrança.
     
-  IMPORTANTE - SOBRE HORÁRIO:
-  - O usuário sempre fala horários no fuso da barbearia (America/Cuiabá ou UTC-3).
-  - NUNCA converta horários para UTC.
-  - Envie para a ferramenta creatingBooking o mesmo horário que o usuário pediu.
-  - Toda conversão de fuso é feita automaticamente no backend.
-  - Nunca some ou subtraia horas manualmente.
+IMPORTANTE - SOBRE HORÁRIO:
+- Todo o sistema utiliza o horário de Brasília (America/Sao_Paulo) como padrão.
+- O usuário sempre informa datas e horários considerando o horário de Brasília.
+- Envie para a ferramenta creatingBooking exatamente a data e hora informadas pelo usuário, sem ajustes manuais.
+- O backend é responsável por normalizar o horário de Brasília para UTC antes de salvar.
+- Nunca some ou subtraia horas manualmente.
+- Nunca converta horários para UTC no chat.
     `,
     
     messages: convertToModelMessages(messages),
