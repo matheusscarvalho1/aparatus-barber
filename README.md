@@ -22,7 +22,7 @@ O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizand
 
 ### Frontend
 
-- **Next.js 15** — App Router e Server Components
+- **Next.js 15** — App Router, Server Components & Client Components
 - **React 19**
 - **TypeScript**
 - **Tailwind CSS**
