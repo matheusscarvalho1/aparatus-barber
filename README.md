@@ -141,7 +141,7 @@ src/
 3. Stripe processa o pagamento
 4. Webhook confirma a transação
 5. Booking é marcado como **confirmado** ou **cancelado**
-6. Reembolso do pagamento com do Stripe com o Cliente caso ele cancele o Agendamento.
+6. Reembolso do pagamento com do Stripe com o Cliente caso ele cancele o agendamento
 
 ### Segurança
 
