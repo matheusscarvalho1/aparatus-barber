@@ -47,8 +47,6 @@ O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizand
 - **TanStack Query (React Query)**
 - **Server Actions (Next.js)**
 - **Vercel** — deploy
-- **Docker** — opcional para ambiente local
-- **GitHub Actions** — CI/CD
 
 ### Integrações de IA
 
