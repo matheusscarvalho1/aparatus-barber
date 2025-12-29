@@ -7,54 +7,50 @@
 
 **Aparatus** é uma plataforma full-stack para gerenciamento de barbearias, desenvolvida com **Next.js 15** e focada em performance, acessibilidade e experiência **mobile-first**.  
 
-O sistema permite o agendamento de serviços via calendário tradicional ou por meio de um **assistente de IA**, além de oferecer catálogo de serviços, pagamentos online com **Stripe** e um painel administrativo completo.
+O sistema permite o agendamento de serviços via calendário tradicional ou por meio de um **assistente de IA**, além de oferecer catálogo de serviços, pagamentos online com **Stripe**.
 
 O projeto foi pensado como um estudo prático das principais tecnologias modernas do ecossistema **JavaScript / TypeScript**, aplicando boas práticas de arquitetura, UI/UX e integração com serviços externos.
 
-O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizando IA generativa aplicada ao desenvolvimento de software, através de prompts otimizados que definem persona, tarefas, objetivos e contexto do projeto (MCP, regras globais, etc.) nos agentes de IA como GitHub Copilot, Cursor ou Claude Code, sempre como ferramenta de aceleração, e não como substituição do processo de desenvolvimento, mantendo total controle sobre o código e avaliando cada decisão gerada.
+O projeto foi pensado como um estudo prático das principais tecnologias modernas do ecossistema JavaScript / TypeScript, aplicando boas práticas de arquitetura, UI/UX e integração com serviços externos.
+
+O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizando IA generativa aplicada ao desenvolvimento de software, através de prompts otimizados que definem persona, tarefas, objetivos e contexto do projeto (MCP, regras globais, etc.) nos agentes de IA como GitHub Copilot, Cursor ou Claude Code, sempre como ferramenta de aceleração.
+
+### 🤖 Engenharia de IA & Workflow
+O desenvolvimento utilizou uma pipeline de AI Orchestration para garantir máxima produtividade e fidelidade técnica:
+- Model Context Protocol (MCP):
+   -  Context7: Integração de documentações sempre atualizadas para evitar alucinações da LLM.
+   - Figma MCP: Codificação da interface com exatidão matemática em relação ao design original via extração de contexto.
+- Governança com Cursor Rules (.mdc): Uso de regras customizadas para forçar padrões de Clean Code, SOLID, proibição de cores hard-coded e padronização de Server Actions.
+- Prompt Engineering: Prompts estruturados com Persona, Contexto e Tarefas, utilizando slugs para SEO e evitando duplicidade de código via DRY.
 
 ### ⚠️ Avisos / Limitações
 
-- Chat com IA: Atualmente, o assistente de IA utiliza o plano gratuito do Gemini. Em alguns momentos, pode ocorrer limite de requisições (quotes), o que pode gerar erros temporários ou indisponibilidade do chat porém, essa limitação não afeta o restante da aplicação, que continua funcional, incluindo agendamento via calendário, pagamentos e navegação pelo site.
-
+- Chat com IA: Atualmente, o assistente utiliza o plano gratuito do Gemini. Em alguns momentos, pode ocorrer limite de requisições (quotes), o que não afeta o restante da aplicação (calendário, pagamentos e navegação continuam funcionais).
 
 ## 🚀 Tecnologias Principais
 
 ### Frontend
 
-- **Next.js 15** — App Router, Server Components & Client Components
+- **Next.js 16** — App Router, Server Components & Client Components
 - **React 19**
-- **TypeScript**
-- **Tailwind CSS**
-- **shadcn/ui** — componentes baseados em Radix UI
-- **Radix UI** — acessibilidade nativa
-- **React Hook Form** — formulários performáticos
-- **Zod** — validação de dados
-- **React Day Picker** — seleção de datas
-- **Lucide React** — ícones
-- **Sonner** — notificações (toasts)
+- **Tailwind CSS 4**
+- **shadcn/ui** — Implementado com Composition Pattern para modularidade
+- **TanStack Query (React Query)** — Cache inteligente e fetching otimizado
+- **Zod & React Hook Form** — Validação rigorosa de dados
 
 ### Backend & Banco de Dados
 
 - **Node.js**
-- **Drizzle ORM** ou **Prisma** (adaptável conforme escolha)
+- **Prisma ORM**
 - **PostgreSQL (Neon)**
-- **Better Auth** — autenticação moderna
-- **Stripe** — pagamentos e webhooks
-
-### Estado & Infraestrutura
-
-- **TanStack Query (React Query)**
-- **Server Actions (Next.js)**
-- **Vercel** — deploy
+- **Better Auth** — Autenticação moderna e segura
+- **Next-Safe-Action** — Server Actions tipadas com validação de autorização
+- **Stripe** — Pagamentos e fluxo resiliente de Webhooks
 
 ### Integrações de IA
 
-- **@ai-sdk/openai**
-- **@ai-sdk/google**
-- **@ai-sdk/react**
-
-Assistente inteligente para auxiliar o usuário no processo de agendamento via chat.
+- Vercel AI SDK (@ai-sdk/google, @ai-sdk/openai)
+- Function Calling (Tools): IA capaz de consultar e executar ações no banco de dados através de Tools (Server Actions).
 
 ---
 
@@ -96,20 +92,23 @@ src/
 
 ---
 
-## 🔐 Sistema de Autenticação
+## 🔐 Segurança & Pagamentos
 
-### Better Auth
+- **Better Auth**: Sessões seguras via cookies HTTP-only e middleware de autorização.
+- **Stripe Webhooks**: Fluxo resiliente onde o agendamento só é confirmado após a notificação do gateway, incluindo lógica de reembolso automático em cancelamentos.
+- **Sanitização**: Proteção total contra inputs maliciosos usando Zod e Server Actions protegidas.
 
-- OAuth com Google
-- Sessões seguras via cookies HTTP-only
-- Middleware de autorização em rotas server com as server actions e next-safe-action
+### 📊 Performance, Responsividade & Acessibilidade
 
-### Segurança
-
-- Validação de dados com Zod
-- Sanitização de inputs
-- Proteção de rotas administrativas
-- Verificação de assinatura de webhooks Stripe
+- **Latência Zero**: Implementação de cache via TanStack Query seguindo estudos de conversão de tempo de resposta.
+- * Server Components
+- * Fetch paralelo de dados
+- * Cache com TanStack Query
+- * Lazy loading de componentes
+- * SEO otimizado com metadados dinâmicos* Design **mobile-first**
+- * Componentes acessíveis com Radix UI
+- * Navegação por teclado
+- * ARIA attributes quando necessário
 
 ---
 
@@ -144,7 +143,6 @@ src/
 - Verificação de assinatura do webhook
 - Chaves protegidas por variáveis de ambiente
 - Processamento de pagamentos no servidor
-
 ---
 
 ## 📊 Banco de Dados
@@ -234,25 +232,6 @@ node ./prisma/seed.js
    ```
    http://localhost:3000
    ```
-
----
-
-## 📱 Responsividade & Acessibilidade
-
-* Design **mobile-first**
-* Componentes acessíveis com Radix UI
-* Navegação por teclado
-* ARIA attributes quando necessário
-
----
-
-## 📈 Performance
-
-* Server Components
-* Fetch paralelo de dados
-* Cache com TanStack Query
-* Lazy loading de componentes
-* SEO otimizado com metadados dinâmicos
 
 ---
 
