@@ -32,12 +32,21 @@ const Home = async () => {
 
         <QuickSearchButtons />
 
-        <Image
-          src={banner}
-          alt="Agende agora!"
-          sizes="100vw"
-          className="h-auto w-full"
-        />
+        <div className="overflow-hidden rounded-xl">
+          <Image
+            src={banner}
+            alt="Agende agora!"
+            sizes="100vw"
+            className="
+              w-full
+              h-auto          /* Mobile: mantém igual */
+              md:max-h-80
+              lg:max-h-65
+              xl:max-h-55
+              object-cover
+            "
+          />
+        </div>
 
         <PageSection>
           <PageSectionTitle>Recomendados</PageSectionTitle>
