@@ -39,7 +39,7 @@ export default function RootLayout({
           disableTransitionOnChange>
           <QueryProvider>
             {children}
-            <Toaster />
+            <Toaster richColors/>
           </QueryProvider>
         </ThemeProvider>
       </body>
