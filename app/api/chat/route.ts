@@ -11,7 +11,7 @@ export const POST = async (request: Request) => {
   const { messages } = await request.json();
 
   const result = streamText({
-    model: google('gemini-2.0-flash'),
+    model: google('gemini-2.5-flash'),
     stopWhen: stepCountIs(10),
     system: `Você é o Aparatus, um assistente virtual de agendamento de barbearias.
 
