@@ -71,6 +71,17 @@ export function ServiceItem({ service }: ServiceItemProps) {
 
   const isConfirmDisabled = !selectedDate || !selectedTime;
 
+  const isAuthenticated = !!isLogged?.session;
+
+  const checkAuthentication = () => {
+    if (!isAuthenticated) {
+      toast.error("Faça login para continuar");
+      handleLogin();
+      return;
+    }
+  setSheetIsOpen(true);
+}
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -113,7 +124,8 @@ export function ServiceItem({ service }: ServiceItemProps) {
   };
 
   return (
-    <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
+    <Sheet open={sheetIsOpen}
+      onOpenChange={setSheetIsOpen}>
       <div className="border-border bg-card flex items-center justify-center gap-3 rounded-2xl border border-solid p-3">
         <div className="relative size-[110px] shrink-0 overflow-hidden rounded-[10px]">
           <Image
@@ -139,9 +151,12 @@ export function ServiceItem({ service }: ServiceItemProps) {
               <p className="text-card-foreground text-sm leading-[1.4] font-bold whitespace-pre">
                 {formatPrice(service.priceInCents)}
               </p>
-              <SheetTrigger asChild>
-                <Button className="rounded-full px-4 py-2">Reservar</Button>
-              </SheetTrigger>
+              <Button
+                className="rounded-full px-4 py-2"
+                onClick={checkAuthentication}
+              >
+                Reservar
+              </Button>
             </div>
           </div>
         </div>
