@@ -8,7 +8,7 @@
 
 ## 📌 Navegação Rápida
 
-- [🖼️ Demonstração](#-demonstracao)
+- [🖼️ Demonstração](#demonstracao)
 - [📋 Descrição](#-descrição)
 - [🤖 Engenharia de IA & Workflow](#-engenharia-de-ia--workflow)
 - [⚠️ Avisos / Limitações](#️-avisos--limitações)
