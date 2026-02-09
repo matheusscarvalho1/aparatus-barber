@@ -1,3 +1,5 @@
+![Logo of the project](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/home-desktop.png)
+
 # APARATUS — Hall de Barbearias com Agendamento e IA
 
 **Link**: [aparatus-barber-eta.vercel.app/](https://aparatus-barber-eta.vercel.app/)
@@ -6,6 +8,7 @@
 
 ## 📌 Navegação Rápida
 
+- [🖼️ Demonstração](#-demonstracao)
 - [📋 Descrição](#-descrição)
 - [🤖 Engenharia de IA & Workflow](#-engenharia-de-ia--workflow)
 - [⚠️ Avisos / Limitações](#️-avisos--limitações)
@@ -256,6 +259,62 @@ node ./prisma/seed.js
    ```
 
 ---
+
+<h2 id="demonstracao">📸 Demonstração do Projeto</h2>
+
+### Home 
+<p>Página inicial com visão geral das barbearias e serviços das barbearias disponíveis, note que a aplicação é responsiva, essa imagem abaixo é o mesmo menu mostrado no início da documentação desse projeto.</p>
+
+
+![Logo of the project](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/home-mobile.png)
+<hr>
+
+### Pesquisa por serviços para disponibilizar barbearias disponíveis com esse serviço para o usuário
+<p>Ao clicar em algumas das dicas de pesquisa logo abaixo do campo de pesquisa, ou escrevendo algo no campo de pesquisa, a aplicação busca o serviço desejado.</p>
+
+![Services](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/searching-for-service.png)
+<hr>
+
+### Menu de Login
+<p>Ao clicar no menu a direita é exibido as informações da conta que fez login ou aparece o botão para realizar o login para conseguir fazer um agendamento, só é possível fazer um agendamento com uma conta logada.</p>
+
+![Menu](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/menu-logged.png)
+<hr>
+
+### Serviços das barbearias
+<p>Ao escolher uma barbearia na Homepage, você é redirecionado para uma pagina que lista os serviços oferecidos por aquela barbearia.</p>
+
+![Barber services](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/barber-services.png)
+<hr>
+
+### Confirmando agendamento
+<p>Ao selecionar o serviço irá abrir o menu de reserva para selecionar o dia e a hora que deseja realizar o serviço.</p>
+
+![Confirming an appointment](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/making-an-appointment.png)
+
+### Checkout do serviço pelo stripe (Integração)
+<p>Tela de checkout do Stripe exibida após a confirmação do agendamento, com os dados do serviço e pagamento direcionado para a conta configurada via webhook integrado à API. (DADOS UTILIZADOS NA IMAGEM SÃO FICTICIOS USADO EXCLUISVAMENTE PARA TESTES)</p>
+
+![Checkout service](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/checkout-service-payment-stripe.png)
+
+### Pagamento confirmado (Integração)
+
+![Checkout service](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/appointment-comfirmed-and-paid.png)
+
+### Histórico de agendamentos
+<p>Ao finalizar o pagamento corretamente, você será redirecionado para a página de históricos de agendamentos, listando todos os serviços que foi agendado na sua conta, os serviços confirmados e cancelados.</p>
+
+![Appointments history](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/appointments-history.png)
+
+### Agendamento por pelo chat de IA
+<p>**Lembrando que essa feature é bem instavel pois eu utilizo o plano gratis da API do GEMINI então os tokens são muito limitados, porém irei disponibilizar um vídeo mostrando o funcionamento do chat de IA.**</p>
+
+![IA Chat for appointments](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/path-to-ai-appointment.png)
+
+![IA Chat for appointments](https://github.com/matheusscarvalho1/aparatus-barber/blob/main/public/docs/screenshots/ai-appointment.png)
+
+<p>A Implementação permite por meio de Tools configurados na API acessar a base  de dados para obter o nome do usuário que esta logado e conversando com a IA, pesquisar pelo nome das barbearias e caso não for informado o nome retornar todas as barbearias, para obter os horários disponíveis da barbearia escolhida, criar o agendamento, verificar se o usuário esta logado na aplicação, retornar o horário dependendo do usuário que esta conversando com ela.</p>
+
 
 <h2 id="links">🔗 Links</h2>
 
