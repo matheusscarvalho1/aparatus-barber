@@ -1,9 +1,30 @@
-
 # APARATUS — Hall de Barbearias com Agendamento e IA
 
 **Link**: [aparatus-barber-eta.vercel.app/](https://aparatus-barber-eta.vercel.app/)
 
-## 📋 Descrição
+---
+
+## 📌 Navegação Rápida
+
+- [📋 Descrição](#-descrição)
+- [🤖 Engenharia de IA & Workflow](#-engenharia-de-ia--workflow)
+- [⚠️ Avisos / Limitações](#️-avisos--limitações)
+- [🚀 Tecnologias Principais](#-tecnologias-principais)
+- [🛠️ Método de Desenvolvimento](#️-método-de-desenvolvimento)
+- [🏗️ Arquitetura do Projeto](#️-arquitetura-do-projeto)
+- [🔐 Segurança & Pagamentos](#-segurança--pagamentos)
+- [📊 Performance, Responsividade & Acessibilidade](#-performance-responsividade--acessibilidade)
+- [💈 Funcionalidades do Sistema](#-funcionalidades-do-sistema)
+- [💳 Integração com Stripe](#-integração-com-stripe)
+- [📊 Banco de Dados](#-banco-de-dados)
+- [⚙️ Variáveis de Ambiente](#️-variáveis-de-ambiente)
+- [📥 Scripts Disponíveis](#-scripts-disponíveis)
+- [🧭 Como Rodar Localmente](#-como-rodar-localmente)
+- [👨‍💻 Desenvolvido por](#-desenvolvido-por)
+
+---
+
+<h1 id="descrição">📋 Descrição</h1> 
 
 **Aparatus** é uma plataforma full-stack para gerenciamento de barbearias, desenvolvida com **Next.js 15** e focada em performance, acessibilidade e experiência **mobile-first**.  
 
@@ -15,7 +36,8 @@ O projeto foi pensado como um estudo prático das principais tecnologias moderna
 
 O principal objetivo foi aprimorar minhas entregas como desenvolvedor, utilizando IA generativa aplicada ao desenvolvimento de software, através de prompts otimizados que definem persona, tarefas, objetivos e contexto do projeto (MCP, regras globais, etc.) nos agentes de IA como GitHub Copilot, Cursor ou Claude Code, sempre como ferramenta de aceleração.
 
-### 🤖 Engenharia de IA & Workflow
+<h3 id="engenharia-de-ia--workflow">🤖 Engenharia de IA & Workflow</h3>
+
 O desenvolvimento utilizou uma pipeline de AI Orchestration para garantir máxima produtividade e fidelidade técnica:
 - Model Context Protocol (MCP):
    -  Context7: Integração de documentações sempre atualizadas para evitar alucinações da LLM.
@@ -23,11 +45,11 @@ O desenvolvimento utilizou uma pipeline de AI Orchestration para garantir máxim
 - Governança com Cursor Rules (.mdc): Uso de regras customizadas para forçar padrões de Clean Code, SOLID, proibição de cores hard-coded e padronização de Server Actions.
 - Prompt Engineering: Prompts estruturados com Persona, Contexto e Tarefas, utilizando slugs para SEO e evitando duplicidade de código via DRY.
 
-### ⚠️ Avisos / Limitações
+<h3 id="avisos--limitações">⚠️ Avisos / Limitações</h3>
 
 - Chat com IA: Atualmente, o assistente utiliza o plano gratuito do Gemini. Em alguns momentos, pode ocorrer limite de requisições (quotes), o que não afeta o restante da aplicação (calendário, pagamentos e navegação continuam funcionais).
 
-## 🚀 Tecnologias Principais
+<h2 id="tecnologias-principais">🚀 Tecnologias Principais</h2>
 
 ### Frontend
 
@@ -54,7 +76,7 @@ O desenvolvimento utilizou uma pipeline de AI Orchestration para garantir máxim
 
 ---
 
-## 🛠️ Método de Desenvolvimento
+<h2 id="método-de-desenvolvimento">🛠️ Método de Desenvolvimento</h2>
 
 - **Mobile First**
 - Interface desenhada priorizando dispositivos móveis
@@ -64,7 +86,7 @@ O desenvolvimento utilizou uma pipeline de AI Orchestration para garantir máxim
 
 ---
 
-## 🏗️ Arquitetura do Projeto
+<h2 id="arquitetura-do-projeto">🏗️ Arquitetura do Projeto</h2>
 
 ### Estrutura de Pastas
 
@@ -92,13 +114,13 @@ src/
 
 ---
 
-## 🔐 Segurança & Pagamentos
+<h2 id="segurança--pagamentos">🔐 Segurança & Pagamentos</h2>
 
 - **Better Auth**: Sessões seguras via cookies HTTP-only e middleware de autorização.
 - **Stripe Webhooks**: Fluxo resiliente onde o agendamento só é confirmado após a notificação do gateway, incluindo lógica de reembolso automático em cancelamentos.
 - **Sanitização**: Proteção total contra inputs maliciosos usando Zod e Server Actions protegidas.
 
-### 📊 Performance, Responsividade & Acessibilidade
+<h3 id="performance-responsividade--acessibilidade">📊 Performance, Responsividade & Acessibilidade</h3>
 
 - **Latência Zero**: Implementação de cache via TanStack Query seguindo estudos de conversão de tempo de resposta.
 - * Server Components
@@ -112,7 +134,7 @@ src/
 
 ---
 
-## 💈 Funcionalidades do Sistema
+<h2 id="funcionalidades-do-sistema">💈 Funcionalidades do Sistema</h2>
 
 ### Para Usuários
 
@@ -127,7 +149,7 @@ src/
 
 ---
 
-## 💳 Integração com Stripe
+<h2 id="integração-com-stripe">💳 Integração com Stripe</h2>
 
 ### Fluxo de Pagamento
 
@@ -145,7 +167,7 @@ src/
 - Processamento de pagamentos no servidor
 ---
 
-## 📊 Banco de Dados
+<h2 id="banco-de-dados">📊 Banco de Dados</h2>
 
 ### Principais Entidades
 
@@ -165,7 +187,7 @@ src/
 
 ---
 
-## ⚙️ Variáveis de Ambiente
+<h2 id="variáveis-de-ambiente">⚙️ Variáveis de Ambiente</h2>
 
 ```env
 STRIPE_WEBHOOK_SECRET=...
@@ -183,7 +205,7 @@ OPENAI_API_KEY=...
 
 ---
 
-## 📥 Scripts Disponíveis
+<h2 id="scripts-disponíveis">📥 Scripts Disponíveis</h2>
 
 * `npm run dev` — Desenvolvimento local
 * `npm run build` — Build de produção
@@ -203,7 +225,7 @@ node ./prisma/seed.js
 
 ---
 
-## 🧭 Como Rodar Localmente
+<h2 id="como-rodar-localmente">🧭 Como Rodar Localmente</h2>
 
 1. Clone o repositório:
 
@@ -235,12 +257,9 @@ node ./prisma/seed.js
 
 ---
 
-## 👨‍💻 Desenvolvido por
+<h2 id="desenvolvido-por">👨‍💻 Desenvolvido por</h2>
 
 **Matheus Carvalho**
 
 * LinkedIn: [@matheusscarvalho](https://www.linkedin.com/in/matheusscarvalho/)
 * GitHub: [@matheusscarvalho1](https://github.com/matheusscarvalho1)
-
-
-
