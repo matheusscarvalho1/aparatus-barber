@@ -20,7 +20,7 @@
 - [⚙️ Variáveis de Ambiente](#️-variáveis-de-ambiente)
 - [📥 Scripts Disponíveis](#-scripts-disponíveis)
 - [🧭 Como Rodar Localmente](#-como-rodar-localmente)
-- [👨‍💻 Desenvolvido por](#-desenvolvido-por)
+- [🔗 Links](#links)
 
 ---
 
@@ -257,9 +257,17 @@ node ./prisma/seed.js
 
 ---
 
-<h2 id="desenvolvido-por">👨‍💻 Desenvolvido por</h2>
+<h2 id="links">🔗 Links</h2>
 
-**Matheus Carvalho**
+- 🌐 Portfólio: https://matheusscarvalho-dev.onrender.com/
+  
+- 💻 Repositório: https://github.com/matheusscarvalho1/portfolio/
+  
+- 💼 LinkedIn: https://www.linkedin.com/in/matheusscarvalho/
 
-* LinkedIn: [@matheusscarvalho](https://www.linkedin.com/in/matheusscarvalho/)
-* GitHub: [@matheusscarvalho1](https://github.com/matheusscarvalho1)
+## 👤 Autor
+
+**Matheus de Souza Carvalho**  
+Full Stack Developer | Software Engineer  
+
+⭐ Se este projeto foi útil, considere deixar uma estrela no repositório!
